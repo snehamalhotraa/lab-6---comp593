@@ -37,6 +37,7 @@ def get_expected_sha256():
         content = response.text
         # Assuming the format is: SHA-256_HASH  FILENAME
         expected_sha256 = content.split()[0]
+        print(f"{expected_sha256} matched")
         return expected_sha256
     else:
         raise Exception("Failed to download the SHA-256 checksum file")
@@ -65,9 +66,10 @@ def installer_ok(installer_data, expected_sha256):
     Returns:
         bool: True if SHA-256 of VLC installer matches expected SHA-256. False if not.
     """    
-    hash_obj = hashlib.sha256(installer_data)
-    computed_sha256 = hash_obj.hexdigest()
-    return computed_sha256 == expected_sha256
+    image_hash = hashlib.sha256(installer_data).hexdigest()
+    print(image_hash)
+    return image_hash == expected_sha256
+    
 
 def save_installer(installer_data):
     """Saves the VLC installer to a local directory.
